@@ -77,6 +77,12 @@ class ProductCell: UICollectionViewCell, Cellable{
         let priceData = viewModel.priceData(for: product)
         priceLabel.attributedText = makePriceAttributedText(priceData)
                 
+        // 비동기로 이미지 로딩
+        Task {
+            let image = await ImageManager.shared.load(from: product.image)
+            imageView.image = image
+        }
+      
         // 평점 및 리뷰 수 표시
         ratingLabel.text = viewModel.ratingData(for: product).ratingText
     }

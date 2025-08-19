@@ -12,6 +12,8 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ProductListViewController" customModule="ProductListApp" customModuleProvider="target">
             <connections>
                 <outlet property="collectionView" destination="e1y-vP-iLR" id="NIO-IZ-fGo"/>
+                <outlet property="errorLabel" destination="XcJ-8W-0hS" id="NVE-jk-qKY"/>
+                <outlet property="errorView" destination="rjS-mB-4J8" id="Aea-3L-thQ"/>
                 <outlet property="view" destination="iN0-l3-epB" id="pes-ri-2FF"/>
             </connections>
         </placeholder>
@@ -30,13 +32,34 @@
                         <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                     </collectionViewFlowLayout>
                 </collectionView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rjS-mB-4J8">
+                    <rect key="frame" x="0.0" y="59" width="393" height="759"/>
+                    <subviews>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XcJ-8W-0hS">
+                            <rect key="frame" x="176" y="319" width="41.333333333333343" height="21"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="XcJ-8W-0hS" firstAttribute="centerY" secondItem="rjS-mB-4J8" secondAttribute="centerY" constant="-50" id="BHu-9t-yi4"/>
+                        <constraint firstItem="XcJ-8W-0hS" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="rjS-mB-4J8" secondAttribute="leading" constant="10" id="EpO-Zj-hCA"/>
+                        <constraint firstItem="XcJ-8W-0hS" firstAttribute="centerX" secondItem="rjS-mB-4J8" secondAttribute="centerX" id="xLd-nh-eeR"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="e1y-vP-iLR" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="4Kg-Cm-4UJ"/>
                 <constraint firstAttribute="bottom" secondItem="e1y-vP-iLR" secondAttribute="bottom" id="SUo-dd-Ay9"/>
+                <constraint firstItem="rjS-mB-4J8" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="V6l-Gi-DYv"/>
                 <constraint firstAttribute="trailing" secondItem="e1y-vP-iLR" secondAttribute="trailing" id="dcD-l5-qes"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="rjS-mB-4J8" secondAttribute="bottom" id="ezf-Kj-Kiq"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="rjS-mB-4J8" secondAttribute="trailing" id="fHb-oV-21n"/>
+                <constraint firstItem="rjS-mB-4J8" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="qF6-YG-Wo6"/>
                 <constraint firstItem="e1y-vP-iLR" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="qWN-dF-tzf"/>
             </constraints>
             <point key="canvasLocation" x="140" y="20"/>

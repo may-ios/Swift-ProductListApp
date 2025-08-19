@@ -10,36 +10,61 @@ import UIKit
 
 
 // MARK: - 뷰컨트롤러의 의존성 주입을 위한 프로토콜
-// ViewController가 의존하는 데이터를 제공하는 인터페이스 정의
+/// ViewController가 의존하는 데이터를 제공하는 인터페이스 정의
 protocol ViewControllerDependency {
     func provideData() -> String
 }
 
 // MARK: - BaseNavigationController
-// UINavigationController를 커스텀하여 기본 설정과 공통 기능을 제공하는 베이스 클래스
+/// UINavigationController를 커스텀하여 기본 설정과 공통 기능을 제공하는 베이스 클래스
 open class BaseNavigationController: UINavigationController {
     
-    // 커스텀 초기화 - 루트 뷰컨트롤러와 프레젠테이션 스타일을 설정
+    /// 커스텀 초기화 - 루트 뷰컨트롤러와 프레젠테이션 스타일을 설정
     public required init(root: UIViewController, presentationStyle: UIModalPresentationStyle = .fullScreen) {
         super.init(rootViewController: root)
         modalPresentationStyle = presentationStyle
     }
 
-    // 스토리보드 또는 XIB에서 초기화할 경우
+    /// 스토리보드 또는 XIB에서 초기화할 경우
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    // 네비게이션 스택의 루트 뷰 컨트롤러를 제네릭 타입으로 반환
+    /// 네비게이션 스택의 루트 뷰 컨트롤러를 제네릭 타입으로 반환
     open func rootViewController<T: BaseViewController>() -> T? {
         viewControllers.first as? T
     }
     
-    // 상태바 스타일을 현재 표시된 뷰 컨트롤러에 위임
+    /// 상태바 스타일을 현재 표시된 뷰 컨트롤러에 위임
     open override var childForStatusBarStyle: UIViewController? { visibleViewController }
 
     open override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // 스와이프 백 제스처 활성화
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        interactivePopGestureRecognizer?.delegate = nil
+        
+        // 네비게이션 바 기본 설정
+        navigationBar.prefersLargeTitles = false
+        navigationBar.tintColor = .label
+
+        // 네비게이션 바 외형 커스터마이징 (iOS 13+)
+        let appearance = UINavigationBarAppearance()
+        appearance.titleTextAttributes = [
+            .foregroundColor: UIColor.black,
+            .font: UIFont.systemFont(ofSize: 14, weight: .medium),
+        ]
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
+        appearance.configureWithTransparentBackground()
+        appearance.shadowImage = nil
+        
+        navigationBar.standardAppearance = appearance
+        navigationBar.scrollEdgeAppearance = appearance
+        navigationBar.compactAppearance = appearance
+        
+        // 뒤로가기 버튼을 minimal 스타일로 설정
+        topViewController?.navigationItem.backButtonDisplayMode = .minimal
     }
     
     // MARK: 메모리 관리
@@ -54,11 +79,11 @@ open class BaseNavigationController: UINavigationController {
 /// 모든 뷰컨트롤러의 공통 기능을 제공하는 베이스 클래스
 open class BaseViewController: UIViewController {
 
-    /// 서브클래스에서 상태바 스타일을 오버라이드할 수 있도록 제공
+    // 서브클래스에서 상태바 스타일을 오버라이드할 수 있도록 제공
     open var statusBarStyle: UIStatusBarStyle { .default }
     open override var preferredStatusBarStyle: UIStatusBarStyle { statusBarStyle }
     
-    /// 템플릿 메서드 패턴 - 서브클래스에서 필요에 따라 UI 구성, 레이아웃, 데이터 바인딩을 각각 처리
+    // 템플릿 메서드 패턴 - 서브클래스에서 필요에 따라 UI 구성, 레이아웃, 데이터 바인딩을 각각 처리
     open func setupUI() {}
     open func setupLayout() {}
     open func bind() {}
@@ -68,7 +93,7 @@ open class BaseViewController: UIViewController {
         
         view.backgroundColor = .systemBackground
         
-        /// 템플릿 메서드 패턴으로 초기화 순서 보장
+        // 템플릿 메서드 패턴으로 초기화 순서 보장
         setupUI()
         setupLayout()
         bind()
@@ -78,7 +103,7 @@ open class BaseViewController: UIViewController {
     
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        /// 네비게이션 바 색상 일관성 유지
+        // 네비게이션 바 색상 일관성 유지
         navigationController?.navigationBar.tintColor = .label
     }
     

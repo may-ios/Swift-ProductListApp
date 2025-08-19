@@ -93,4 +93,13 @@ extension ProductListViewModel {
     func ratingData(for product: Product) -> RatingData {
         return RatingData(product: product)
     }
+    
+    /// 레이아웃 타입별 태그 데이터 반환
+    /// - half: 2개 이상의 태그가 있을 때 앞의 2개만
+    /// - full: 모든 태그
+    func tagsData(for product: Product) -> [String] {
+        return currentLayoutType == .half
+               ? (product.tags.count <= 2 ? product.tags : Array(product.tags.prefix(2)))
+               : product.tags
+     }
 }

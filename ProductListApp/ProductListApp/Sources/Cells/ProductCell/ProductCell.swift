@@ -11,7 +11,7 @@ import UIKit
 /// 상품 리스트의 각 셀을 표시하는 커스텀 컬렉션 뷰 셀
 class ProductCell: UICollectionViewCell, Cellable{
 
-    // UI 스타일 설정을 위한 구조체 (설정 분리)
+    /// UI 스타일 설정을 위한 구조체 (설정 분리)
     private struct UIConfig {
         let discountRate = (
             font: UIFont.AppleSDGothicNeo.bold.font(size: 16),            // 할인율 폰트
@@ -25,6 +25,12 @@ class ProductCell: UICollectionViewCell, Cellable{
             font: UIFont.AppleSDGothicNeo.light.font(size: 11),           // 원 가격 폰트
             color: UIColor.secondaryLabel                                 // 원 가격 색상
         )
+        
+        let tag = (
+            backgroundColor: UIColor.systemPurple.withAlphaComponent(0.15), // tag 배경 색상
+            textColor: UIColor.systemPurple                                 // tag 텍스트 색상
+        )
+        
     }
     
     // MARK: IBOutlets
@@ -33,8 +39,13 @@ class ProductCell: UICollectionViewCell, Cellable{
     @IBOutlet weak var nameLabel: UILabel!                               // 상품 이름
     @IBOutlet weak var priceLabel: UILabel!                              // 가격 정보
     @IBOutlet weak var ratingLabel: UILabel!                             // 평점 및 리뷰 수
+    @IBOutlet weak var benefitView: HorizontalTextBoxView!               // 혜택 표시 뷰
+    @IBOutlet weak var tagView: HorizontalTextBoxView!                   // 태그 표시 뷰
     
-    // UI 설정 상수
+    //benefitView, tagView를 포함하여 빈 데이터 hidden 처리 시 영역 처리 유연하도록 UIStackView 활용
+    @IBOutlet weak var stackView: UIStackView!
+    
+    /// UI 설정 상수
     private let uiConfig = UIConfig()
 
     ///셀 초기화
@@ -56,6 +67,8 @@ class ProductCell: UICollectionViewCell, Cellable{
         priceLabel.textColor = uiConfig.discountPrice.color
         ratingLabel.font = UIFont.AppleSDGothicNeo.regular.font(size: 12)
         ratingLabel.textColor = .secondaryLabel
+        tagView.tagTextColor = uiConfig.tag.textColor
+        tagView.tagBackgroundColor = uiConfig.tag.backgroundColor
     }
     
     /// 셀 재사용 준비
@@ -72,6 +85,16 @@ class ProductCell: UICollectionViewCell, Cellable{
     func configure(_ product: Product, viewModel: ProductListViewModel) {
         brandLabel.text = product.brand
         nameLabel.text = product.name
+        
+        // benefits 정보 표시
+        let benefits = product.benefits
+        benefitView.isHidden = benefits.isEmpty //히든 처리에 따라 stackView에서 높이 영역 동적으로 처리
+        benefitView.setTags(benefits)
+        
+        // tags 정보 표시 : half - 2개 까지 , full 전부 표시하도록 뷰모델에서 처리
+        let tags = viewModel.tagsData(for: product)
+        tagView.isHidden = tags.isEmpty         //히든 처리에 따라 stackView에서 높이 영역 동적으로 처리
+        tagView.setTags(tags)
 
         // 가격 정보를 뷰모델에서 처리하여 표시
         let priceData = viewModel.priceData(for: product)

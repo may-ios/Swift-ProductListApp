@@ -47,6 +47,32 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="1Pv-4U-Evn">
+                                <rect key="frame" x="0.0" y="107.33333333333331" width="310" height="44"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="z3a-Fw-gqY" customClass="HorizontalTextBoxView" customModule="ProductListApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="0.0" width="310" height="20"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="C4Q-qN-ocf"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5XG-GH-MdJ" customClass="HorizontalTextBoxView" customModule="ProductListApp" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="24" width="310" height="20"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="20" id="Ea1-W4-uuv"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="5XG-GH-MdJ" secondAttribute="trailing" id="42L-ie-fgZ"/>
+                                    <constraint firstAttribute="trailing" secondItem="z3a-Fw-gqY" secondAttribute="trailing" id="MuD-cF-n3I"/>
+                                    <constraint firstItem="z3a-Fw-gqY" firstAttribute="leading" secondItem="1Pv-4U-Evn" secondAttribute="leading" id="bwV-OS-5If"/>
+                                    <constraint firstItem="5XG-GH-MdJ" firstAttribute="leading" secondItem="1Pv-4U-Evn" secondAttribute="leading" id="wvo-bp-fL9"/>
+                                </constraints>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -54,11 +80,14 @@
                             <constraint firstAttribute="height" constant="170" id="4zw-yk-Ait"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Q1C-HF-8ZX" secondAttribute="trailing" constant="10" id="BTs-LJ-6F6"/>
                             <constraint firstItem="412-K7-j71" firstAttribute="leading" secondItem="G3r-ye-fDG" secondAttribute="leading" constant="10" id="LHl-Ke-r9R"/>
+                            <constraint firstItem="1Pv-4U-Evn" firstAttribute="leading" secondItem="G3r-ye-fDG" secondAttribute="leading" id="NYm-qD-MYV"/>
                             <constraint firstItem="FMX-4O-k4n" firstAttribute="leading" secondItem="412-K7-j71" secondAttribute="leading" id="STN-Cw-6kF"/>
+                            <constraint firstItem="1Pv-4U-Evn" firstAttribute="top" secondItem="Q1C-HF-8ZX" secondAttribute="bottom" constant="4" id="WQf-6a-4eI"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="412-K7-j71" secondAttribute="trailing" constant="10" id="Wid-gc-z85"/>
                             <constraint firstItem="a4o-82-ack" firstAttribute="top" secondItem="G3r-ye-fDG" secondAttribute="top" constant="10" id="YAV-ly-bzu"/>
                             <constraint firstItem="412-K7-j71" firstAttribute="top" secondItem="a4o-82-ack" secondAttribute="bottom" constant="4" id="adr-4h-ce7"/>
                             <constraint firstItem="a4o-82-ack" firstAttribute="leading" secondItem="G3r-ye-fDG" secondAttribute="leading" constant="10" id="hK3-K7-YEN"/>
+                            <constraint firstAttribute="trailing" secondItem="1Pv-4U-Evn" secondAttribute="trailing" id="lOi-SZ-H3q"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="FMX-4O-k4n" secondAttribute="trailing" constant="10" id="nGQ-J6-E7T"/>
                             <constraint firstItem="Q1C-HF-8ZX" firstAttribute="top" secondItem="FMX-4O-k4n" secondAttribute="bottom" constant="4" id="qpy-4w-mUD"/>
                             <constraint firstItem="Q1C-HF-8ZX" firstAttribute="leading" secondItem="FMX-4O-k4n" secondAttribute="leading" id="spB-1O-rF5"/>
@@ -79,11 +108,14 @@
             </constraints>
             <size key="customSize" width="365" height="534"/>
             <connections>
+                <outlet property="benefitView" destination="z3a-Fw-gqY" id="2b9-Zf-7bn"/>
                 <outlet property="brandLabel" destination="a4o-82-ack" id="Wcl-hw-26c"/>
                 <outlet property="imageView" destination="x3I-uW-A8q" id="JXJ-WV-gDi"/>
                 <outlet property="nameLabel" destination="412-K7-j71" id="DvR-r7-9iz"/>
                 <outlet property="priceLabel" destination="FMX-4O-k4n" id="cCg-r7-mUt"/>
                 <outlet property="ratingLabel" destination="Q1C-HF-8ZX" id="K1N-Ru-1p1"/>
+                <outlet property="stackView" destination="1Pv-4U-Evn" id="8Pu-WM-meo"/>
+                <outlet property="tagView" destination="5XG-GH-MdJ" id="zZ6-jh-Qhq"/>
             </connections>
             <point key="canvasLocation" x="-105.34351145038167" y="23.239436619718312"/>
         </collectionViewCell>

@@ -12,9 +12,21 @@ import UIKit
 /// 상품 리스트를 표시하는 뷰 컨트롤러, 뷰모델을 의존성으로 주입받음
 class ProductListViewController: AppDependencyViewController<ProductListViewModel>  {
     
+    /// UI 스타일 설정을 위한 구조체 (설정 분리, 문자열 상수 정리)
+    private struct UIConfig {
+        let error = (
+            font: UIFont.AppleSDGothicNeo.bold.font(size: 15),
+            text: "상품 목록을 불러오지 못했습니다"
+        )
+        let logoName = "logo_cj_enm"
+    }
+    
     @IBOutlet weak var errorView: UIView!
     @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
+    
+    /// UI 설정
+    private let uiConfig = UIConfig()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,7 +47,8 @@ class ProductListViewController: AppDependencyViewController<ProductListViewMode
         
     /// UI 요소 초기 설정 (템플릿 메서드 패턴)
     override func setupUI() {
-        errorLabel.text = "상품 목록을 불러오지 못했습니다"
+        errorLabel.text = uiConfig.error.text
+        errorLabel.font = uiConfig.error.font
         errorView.isHidden = true
         setupNavigationBar()
         collectionView.register(cell: ProductCell.self, delegate: self, dataSource: self)
@@ -109,7 +122,7 @@ class ProductListViewController: AppDependencyViewController<ProductListViewMode
     /// 네비게이션 바 설정
     private func setupNavigationBar() {
         let logoButton = UIButton(type: .custom)
-        logoButton.setImage(UIImage(named: "logo_cj_enm"), for: .normal)
+        logoButton.setImage(UIImage(named: uiConfig.logoName), for: .normal)
         logoButton.frame = CGRect(x: 0, y: 0, width: 63, height: 30)
         logoButton.addTarget(self, action: #selector(logoButtonTapped), for: .touchUpInside)
 

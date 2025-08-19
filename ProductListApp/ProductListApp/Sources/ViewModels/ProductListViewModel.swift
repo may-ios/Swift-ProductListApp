@@ -12,9 +12,11 @@ import Foundation
 class ProductListViewModel {
     private let service: ProductServiceProtocol  // 상품 데이터 서비스
     private(set) var products: [Product] = []   // 상품 목록
+    private(set) var currentLayoutType: ProductListCollectionViewLayout.LayoutType = .half // 현재 레이아웃 타입
 
     // 뷰 업데이트를 위한 클로저 기반 바인딩
     var onProductsUpdated: (([Product]) -> Void)?   // 상품 데이터 업데이트 알림
+    var onLayoutTypeChanged: ((ProductListCollectionViewLayout.LayoutType) -> Void)? // 레이아웃 변경 알림
 
     /// 의존성 주입을 통한 서비스 설정
     init(service: ProductServiceProtocol = ProductService()) {
@@ -26,6 +28,13 @@ class ProductListViewModel {
         products = service.fetchProducts(from: .list)
         onProductsUpdated?(products)
     }
+    
+    /// 반반/전체 레이아웃 간 전환
+    func toggleLayoutType() {
+        currentLayoutType = currentLayoutType == .half ? .full : .half
+        onLayoutTypeChanged?(currentLayoutType)
+    }
+
 }
 
 // MARK: - 뷰모델 데이터 처리 확장

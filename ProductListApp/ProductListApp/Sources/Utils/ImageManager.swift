@@ -42,3 +42,19 @@ final class ImageManager {
     }
     
 }
+
+// MARK: - UIImageView 확장
+// ImageManager를 사용하여 UIImageView에 직접 활용
+extension UIImageView {
+    func loadImage(from url: URL, placeholder: UIImage? = nil) {
+        self.image = placeholder
+        
+        Task {
+            if let image = await ImageManager.shared.load(from: url) {
+                await MainActor.run {
+                    self.image = image
+                }
+            }
+        }
+    }
+}

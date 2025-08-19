@@ -40,6 +40,23 @@ open class BaseNavigationController: UINavigationController {
 
     open override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // 네비게이션 바 기본 설정
+        navigationBar.prefersLargeTitles = false
+        navigationBar.tintColor = .label
+
+        // 네비게이션 바 외형 커스터마이징 (iOS 13+)
+        let appearance = UINavigationBarAppearance()
+        appearance.titleTextAttributes = [.foregroundColor: UIColor.black,]
+        appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
+        appearance.configureWithDefaultBackground()
+        
+        navigationBar.standardAppearance = appearance
+        navigationBar.scrollEdgeAppearance = appearance
+        navigationBar.compactAppearance = appearance
+        
+        // 뒤로가기 버튼을 minimal 스타일로 설정
+        topViewController?.navigationItem.backButtonDisplayMode = .minimal
     }
     
     // MARK: 메모리 관리
@@ -54,11 +71,11 @@ open class BaseNavigationController: UINavigationController {
 /// 모든 뷰컨트롤러의 공통 기능을 제공하는 베이스 클래스
 open class BaseViewController: UIViewController {
 
-    /// 서브클래스에서 상태바 스타일을 오버라이드할 수 있도록 제공
+    // 서브클래스에서 상태바 스타일을 오버라이드할 수 있도록 제공
     open var statusBarStyle: UIStatusBarStyle { .default }
     open override var preferredStatusBarStyle: UIStatusBarStyle { statusBarStyle }
     
-    /// 템플릿 메서드 패턴 - 서브클래스에서 필요에 따라 UI 구성, 레이아웃, 데이터 바인딩을 각각 처리
+    // 템플릿 메서드 패턴 - 서브클래스에서 필요에 따라 UI 구성, 레이아웃, 데이터 바인딩을 각각 처리
     open func setupUI() {}
     open func setupLayout() {}
     open func bind() {}
@@ -68,7 +85,7 @@ open class BaseViewController: UIViewController {
         
         view.backgroundColor = .systemBackground
         
-        /// 템플릿 메서드 패턴으로 초기화 순서 보장
+        // 템플릿 메서드 패턴으로 초기화 순서 보장
         setupUI()
         setupLayout()
         bind()
@@ -78,7 +95,7 @@ open class BaseViewController: UIViewController {
     
     open override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        /// 네비게이션 바 색상 일관성 유지
+        // 네비게이션 바 색상 일관성 유지
         navigationController?.navigationBar.tintColor = .label
     }
     

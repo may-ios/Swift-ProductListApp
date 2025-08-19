@@ -27,3 +27,53 @@ class ProductListViewModel {
         onProductsUpdated?(products)
     }
 }
+
+// MARK: - 뷰모델 데이터 처리 확장
+extension ProductListViewModel {
+    
+    
+    /// 가격 정보 데이터 구조체
+    struct PriceData {
+        let discountRate: String
+        let discountPrice: String
+        let originalPrice: String
+        let hasDiscount: Bool
+        
+        init(product: Product) {
+            discountRate = product.discountRate.string + "%"
+            discountPrice = product.discountPrice.withCommas() + "원"
+            originalPrice = product.price.withCommas() + "원"
+            hasDiscount = product.discountRate > 0
+        }
+    }
+    
+    /// 상품별 가격 데이터 생성
+    func priceData(for product: Product) -> PriceData {
+        return PriceData(product: product)
+    }
+    
+    /// 평점 정보 데이터 구조체
+    struct RatingData {
+        let ratingText: String
+        
+        init(product: Product) {
+            guard product.rating > 0 else {
+                ratingText = "" // 평점이 없으면 빈 문자열
+                return
+            }
+            
+            var text = "★ \(product.rating)" // 평점 표시
+            
+            if  product.reviewCount > 0 {
+                text += " (\(product.reviewCount.withCommas()))" // 리뷰 수 추가, comma 처리
+            }
+            
+            ratingText = text
+        }
+    }
+    
+    /// 상품별 평점 데이터 생성
+    func ratingData(for product: Product) -> RatingData {
+        return RatingData(product: product)
+    }
+}

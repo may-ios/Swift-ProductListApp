@@ -16,26 +16,26 @@ protocol ViewControllerDependency {
 }
 
 // MARK: - BaseNavigationController
-// UINavigationController를 커스텀하여 기본 설정과 공통 기능을 제공하는 베이스 클래스
+/// UINavigationController를 커스텀하여 기본 설정과 공통 기능을 제공하는 베이스 클래스
 open class BaseNavigationController: UINavigationController {
     
-    // 커스텀 초기화 - 루트 뷰컨트롤러와 프레젠테이션 스타일을 설정
+    /// 커스텀 초기화 - 루트 뷰컨트롤러와 프레젠테이션 스타일을 설정
     public required init(root: UIViewController, presentationStyle: UIModalPresentationStyle = .fullScreen) {
         super.init(rootViewController: root)
         modalPresentationStyle = presentationStyle
     }
 
-    // 스토리보드 또는 XIB에서 초기화할 경우
+    /// 스토리보드 또는 XIB에서 초기화할 경우
     public required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    // 네비게이션 스택의 루트 뷰 컨트롤러를 제네릭 타입으로 반환
+    /// 네비게이션 스택의 루트 뷰 컨트롤러를 제네릭 타입으로 반환
     open func rootViewController<T: BaseViewController>() -> T? {
         viewControllers.first as? T
     }
     
-    // 상태바 스타일을 현재 표시된 뷰 컨트롤러에 위임
+    /// 상태바 스타일을 현재 표시된 뷰 컨트롤러에 위임
     open override var childForStatusBarStyle: UIViewController? { visibleViewController }
 
     open override func viewDidLoad() {

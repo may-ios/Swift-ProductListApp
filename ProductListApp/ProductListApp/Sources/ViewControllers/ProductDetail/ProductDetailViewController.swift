@@ -44,9 +44,12 @@ final class ProductDetailViewController: BaseWebViewController<WebViewComponent>
         navigationController?.navigationBar.tintColor = .black
     }
     
-    // WKScriptMessageHandler - 자바스크립트 메시지 처리
+    /// WKScriptMessageHandler - 자바스크립트 메시지 처리
+    //현재 구현할 내용이 없어 주석처리
+    /*
     override func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
     }
+     */
     
     /// 기본 UI 스타일 설정
     /// url 웹페이지 내부 스타일에 맞게 흰색으로 커스텀

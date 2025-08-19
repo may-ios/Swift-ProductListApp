@@ -20,7 +20,7 @@ fileprivate class ScriptMessageHandler: NSObject, WKScriptMessageHandler {
         super.init()
     }
     
-    /// WKUserContentController로부터 받은 메시지를 델리게이트로 전ekf
+    /// WKUserContentController로부터 받은 메시지를 델리게이트로 전달
     func userContentController(_ userContentController: WKUserContentController, didReceive message: WKScriptMessage) {
         delegate?.userContentController(userContentController, didReceive: message)
     }

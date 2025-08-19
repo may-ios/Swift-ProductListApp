@@ -18,6 +18,18 @@ class ProductListViewController: AppDependencyViewController<ProductListViewMode
         super.viewDidLoad()
         // 기본 뷰 로드, setupUI,setupLayout,bind 호출 (상위 클래스에서 처리)
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        // 스크롤 시 네비게이션 바 숨김 기능 활성화
+        navigationController?.hidesBarsOnSwipe = true
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        // 뷰가 사라질 때 네비게이션 바 표시 복구
+        navigationController?.hidesBarsOnSwipe = false
+        navigationController?.setNavigationBarHidden(false, animated: true)
+    }
         
     /// UI 요소 초기 설정 (템플릿 메서드 패턴)
     override func setupUI() {
@@ -45,7 +57,8 @@ class ProductListViewController: AppDependencyViewController<ProductListViewMode
         
         // 상품 선택 시 상세 화면으로 이동
         dependency.onRouteToDetail = { [weak self] name, url in
-            //TODO : 상품 상세화면 구현
+            let detailViewController = ProductDetailViewController(dependency: WebViewComponent(url: url, name: name))
+            self?.navigationController?.pushViewController(detailViewController, animated: true)
         }
         
         // 레이아웃 타입 변경 시 UI 업데이트

@@ -10,7 +10,7 @@ import UIKit
 
 
 // MARK: - 뷰컨트롤러의 의존성 주입을 위한 프로토콜
-// ViewController가 의존하는 데이터를 제공하는 인터페이스 정의
+/// ViewController가 의존하는 데이터를 제공하는 인터페이스 정의
 protocol ViewControllerDependency {
     func provideData() -> String
 }
@@ -41,15 +41,23 @@ open class BaseNavigationController: UINavigationController {
     open override func viewDidLoad() {
         super.viewDidLoad()
         
+        // 스와이프 백 제스처 활성화
+        navigationController?.interactivePopGestureRecognizer?.isEnabled = true
+        interactivePopGestureRecognizer?.delegate = nil
+        
         // 네비게이션 바 기본 설정
         navigationBar.prefersLargeTitles = false
         navigationBar.tintColor = .label
 
         // 네비게이션 바 외형 커스터마이징 (iOS 13+)
         let appearance = UINavigationBarAppearance()
-        appearance.titleTextAttributes = [.foregroundColor: UIColor.black,]
+        appearance.titleTextAttributes = [
+            .foregroundColor: UIColor.black,
+            .font: UIFont.systemFont(ofSize: 14, weight: .medium),
+        ]
         appearance.largeTitleTextAttributes = [.foregroundColor: UIColor.black]
-        appearance.configureWithDefaultBackground()
+        appearance.configureWithTransparentBackground()
+        appearance.shadowImage = nil
         
         navigationBar.standardAppearance = appearance
         navigationBar.scrollEdgeAppearance = appearance

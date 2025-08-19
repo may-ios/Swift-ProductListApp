@@ -23,7 +23,7 @@ final class ProductListAppUITests: XCTestCase {
     // 앱이 정상적으로 실행되는지 확인
     func testAppLaunch() throws {
         // Then - 앱이 존재하고 실행되었는지 검증
-        XCTAssertTrue(app.exists)
+        XCTAssertTrue(app.exists, "앱이 정상적으로 실행되어야 함")
     }
     
     // MARK: 메인 화면 요소 테스트
@@ -31,10 +31,10 @@ final class ProductListAppUITests: XCTestCase {
     func testMainScreen() throws {
         // When, Then - 컬렉션뷰가 존재하고 표시되는지 확인
         let collectionView = app.collectionViews.firstMatch
-        XCTAssertTrue(collectionView.waitForExistence(timeout: 3))
-        
+        XCTAssertTrue(collectionView.waitForExistence(timeout: 3), "컬렉션뷰가 3초 내에 나타나야 함")
+
         let navigationBar = app.navigationBars.firstMatch
-        XCTAssertTrue(navigationBar.exists)
+        XCTAssertTrue(navigationBar.exists, "네비게이션바가 존재해야 함")
     }
     
     // MARK: 상품 선택 테스트
@@ -42,8 +42,8 @@ final class ProductListAppUITests: XCTestCase {
     func testProductTap() throws {
         // Given - 컬렉션뷰가 로드될 때까지 대기
         let collectionView = app.collectionViews.firstMatch
-        XCTAssertTrue(collectionView.waitForExistence(timeout: 3))
-        
+        XCTAssertTrue(collectionView.waitForExistence(timeout: 3), "컬렉션뷰가 로드되어야 함")
+
         // When - 첫 번째 셀 탭
         let firstCell = collectionView.cells.firstMatch
         if firstCell.waitForExistence(timeout: 2) {
@@ -51,7 +51,7 @@ final class ProductListAppUITests: XCTestCase {
             
             // Then - 뒤로가기 버튼이 생기면 화면 전환된 것
             let backButton = app.navigationBars.buttons.element(boundBy: 0)
-            XCTAssertTrue(backButton.waitForExistence(timeout: 3))
+            XCTAssertTrue(backButton.waitForExistence(timeout: 3), "상세화면 이동 후 뒤로가기 버튼이 나타나야 함")
         } else {
             XCTFail("테스트할 셀이 존재하지 않음")
         }
@@ -62,13 +62,13 @@ final class ProductListAppUITests: XCTestCase {
     func testLayoutToggle() throws {
         // Given - 토글 버튼이 존재하는지 확인
         let toggleButton = app.navigationBars.buttons.firstMatch
-        XCTAssertTrue(toggleButton.exists)
-        
+        XCTAssertTrue(toggleButton.exists, "레이아웃 토글 버튼이 존재해야 함")
+
         // When - 토글 버튼 탭
         toggleButton.tap()
         
         // Then -  버튼이 정상적으로 동작했는지 확인, 레이아웃 변경은 시각적이므로 크래시 없는 지로 확인
-        XCTAssertTrue(toggleButton.exists)
+        XCTAssertTrue(toggleButton.exists, "토글 후에도 버튼이 여전히 존재해야 함")
     }
     
     // MARK: 스크롤 동작 테스트
@@ -76,13 +76,13 @@ final class ProductListAppUITests: XCTestCase {
     func testScrolling() throws {
         // Given - 컬렉션뷰가 로드될 때까지 대기
         let collectionView = app.collectionViews.firstMatch
-        XCTAssertTrue(collectionView.waitForExistence(timeout: 3))
+        XCTAssertTrue(collectionView.waitForExistence(timeout: 3), "컬렉션뷰가 로드되어야 함")
 
         // When - 스크롤 동작 수행
         collectionView.swipeUp()
         
         // Then - 스크롤이 정상적으로 동작했는지 확인 ,크래시 없이 완료되는지 확인
-        XCTAssertTrue(collectionView.exists)
+        XCTAssertTrue(collectionView.exists, "스크롤 후에도 컬렉션뷰가 존재해야 함")
     }
     
     // MARK: 앱 실행 성능 테스트

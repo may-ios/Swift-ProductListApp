@@ -41,12 +41,12 @@ final class ProductListAppTests: XCTestCase {
     
     // MARK: ProductService 테스트
     // JSON 파일에서 상품 데이터를 로드하는 기능 검증
-    func testProductService() throws {
+    func testProductService() async throws {
         // Given - ProductService 인스턴스 생성
         let service = ProductService()
         
         // When: 상품 데이터 로드
-        let products = service.fetchProducts(from: .list)
+        let products = try await service.fetchProducts(from: .list)
         
         // Then: 상품 배열이 비어 있지 않은지 확인
         XCTAssertTrue(products.count >= 0, "상품 목록이 정상적으로 로드되어야 함")
@@ -60,6 +60,7 @@ final class ProductListAppTests: XCTestCase {
     
     // MARK: ViewModel 초기화 테스트
     // ProductListViewModel의 초기 상태 검증
+    @MainActor
     func testViewModelInit() throws {
         // Given, When - ProductListViewModel 인스턴스 생성
         let viewModel = ProductListViewModel()
@@ -71,6 +72,7 @@ final class ProductListAppTests: XCTestCase {
     
     // MARK: 레이아웃 토글 테스트
     // ViewModel의 레이아웃 토글 기능 검증
+    @MainActor
     func testLayoutToggle() throws {
         // Given - ProductListViewModel 인스턴스 생성
         let viewModel = ProductListViewModel()

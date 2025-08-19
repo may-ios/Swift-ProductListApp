@@ -12,6 +12,8 @@ import UIKit
 /// 상품 리스트를 표시하는 뷰 컨트롤러, 뷰모델을 의존성으로 주입받음
 class ProductListViewController: AppDependencyViewController<ProductListViewModel>  {
     
+    @IBOutlet weak var errorView: UIView!
+    @IBOutlet weak var errorLabel: UILabel!
     @IBOutlet weak var collectionView: UICollectionView!
     
     override func viewDidLoad() {
@@ -33,6 +35,8 @@ class ProductListViewController: AppDependencyViewController<ProductListViewMode
         
     /// UI 요소 초기 설정 (템플릿 메서드 패턴)
     override func setupUI() {
+        errorLabel.text = "상품 목록을 불러오지 못했습니다"
+        errorView.isHidden = true
         setupNavigationBar()
         collectionView.register(cell: ProductCell.self, delegate: self, dataSource: self)
     }
@@ -44,14 +48,18 @@ class ProductListViewController: AppDependencyViewController<ProductListViewMode
     }
     
     /// 데이터 바인딩 및 이벤트 연결 (템플릿 메서드 패턴)
-    override func bind() {
+    override func bind()  {
         // 초기 데이터 로딩
-        dependency.fetchProducts()
+        Task { await dependency.fetchProducts() }
         
         // 상품 목록 업데이트 시 UI 갱신
-        dependency.onProductsUpdated = { [weak self] _ in
-            DispatchQueue.main.async {
+        dependency.onProductsUpdated = { [weak self] result in
+            switch result {
+            case .success:
+                self?.errorView.isHidden = true
                 self?.collectionView.reloadData()
+            case .failure( _):
+                self?.errorView.isHidden = false
             }
         }
         

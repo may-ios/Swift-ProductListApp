@@ -9,13 +9,14 @@ import Foundation
 
 // MARK: - ProductListViewModel
 /// 상품 목록 화면의 비즈니스 로직을 담당하는 뷰모델 - MVVM 패턴
+@MainActor
 class ProductListViewModel {
     private let service: ProductServiceProtocol  // 상품 데이터 서비스
     private(set) var products: [Product] = []   // 상품 목록
     private(set) var currentLayoutType: ProductListCollectionViewLayout.LayoutType = .half // 현재 레이아웃 타입
 
     // 뷰 업데이트를 위한 클로저 기반 바인딩
-    var onProductsUpdated: (([Product]) -> Void)?   // 상품 데이터 업데이트 알림
+    var onProductsUpdated: ((Result<[Product],Error>) -> Void)?   // 상품 데이터 업데이트 알림
     var onRouteToDetail: ((String, URL) -> Void)?   // 상세 화면 이동 알림
     var onLayoutTypeChanged: ((ProductListCollectionViewLayout.LayoutType) -> Void)? // 레이아웃 변경 알림
 
@@ -25,9 +26,14 @@ class ProductListViewModel {
     }
     
     /// 상품 목록 가져오기
-    func fetchProducts() {
-        products = service.fetchProducts(from: .list)
-        onProductsUpdated?(products)
+    func fetchProducts() async {
+        do {
+            products = try await service.fetchProducts(from: .list)
+            onProductsUpdated?(.success(products))
+        }
+        catch {
+            onProductsUpdated?(.failure(error))
+        }
     }
     
     /// 상품 선택 시 상세 화면으로 이동

@@ -43,6 +43,11 @@ class ProductListViewController: AppDependencyViewController<ProductListViewMode
             }
         }
         
+        // 상품 선택 시 상세 화면으로 이동
+        dependency.onRouteToDetail = { [weak self] name, url in
+            //TODO : 상품 상세화면 구현
+        }
+        
         // 레이아웃 타입 변경 시 UI 업데이트
         dependency.onLayoutTypeChanged = { [weak self] layoutType in
             DispatchQueue.main.async {
@@ -52,7 +57,7 @@ class ProductListViewController: AppDependencyViewController<ProductListViewMode
     }
     
     // MARK: 레이아웃 업데이트
-    // 컬렉션 뷰의 레이아웃 타입 변경 시 애니메이션 적용
+    /// 컬렉션 뷰의 레이아웃 타입 변경 시 애니메이션 적용
     private func updateLayout(for layoutType: ProductListCollectionViewLayout.LayoutType) {
 
         guard let layout = collectionView.collectionViewLayout as? ProductListCollectionViewLayout else { return }
@@ -69,18 +74,18 @@ class ProductListViewController: AppDependencyViewController<ProductListViewMode
         
     }
     
-    // 레이아웃 토글 버튼 액션
+    /// 레이아웃 토글 버튼 액션
     @objc private func toggleLayoutButtonTapped() {
         dependency.toggleLayoutType()
         updateNavigationButton()
     }
     
-    // 로고 버튼 액션 - 맨 위로 스크롤
+    /// 로고 버튼 액션 - 맨 위로 스크롤
     @objc private func logoButtonTapped() {
         collectionView.setContentOffset(CGPoint(x: 0, y: -collectionView.safeAreaInsets.top), animated: true)
     }
     
-    // 네비게이션 바 설정
+    /// 네비게이션 바 설정
     private func setupNavigationBar() {
         let logoButton = UIButton(type: .custom)
         logoButton.setImage(UIImage(named: "logo_cj_enm"), for: .normal)
@@ -99,7 +104,7 @@ class ProductListViewController: AppDependencyViewController<ProductListViewMode
         navigationItem.rightBarButtonItems = [layoutTypeButton]
     }
     
-    // 네비게이션 버튼 이미지 업데이트
+    /// 네비게이션 버튼 이미지 업데이트
     private func updateNavigationButton() {
         guard let button = navigationItem.rightBarButtonItems?.first else { return }
         
@@ -124,6 +129,8 @@ extension ProductListViewController: UICollectionViewDataSource, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // 뷰모델에 선택 알림
+        dependency.didSelected(at: indexPath.item)
     }
     
 }

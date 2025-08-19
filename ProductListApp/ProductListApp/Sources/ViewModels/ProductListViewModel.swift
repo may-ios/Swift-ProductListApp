@@ -16,6 +16,7 @@ class ProductListViewModel {
 
     // 뷰 업데이트를 위한 클로저 기반 바인딩
     var onProductsUpdated: (([Product]) -> Void)?   // 상품 데이터 업데이트 알림
+    var onRouteToDetail: ((String, URL) -> Void)?   // 상세 화면 이동 알림
     var onLayoutTypeChanged: ((ProductListCollectionViewLayout.LayoutType) -> Void)? // 레이아웃 변경 알림
 
     /// 의존성 주입을 통한 서비스 설정
@@ -27,6 +28,13 @@ class ProductListViewModel {
     func fetchProducts() {
         products = service.fetchProducts(from: .list)
         onProductsUpdated?(products)
+    }
+    
+    /// 상품 선택 시 상세 화면으로 이동
+    func didSelected(at index: Int) {
+        guard products.count > index else { return }
+        let product = products[index]
+        onRouteToDetail?(product.name, product.link)
     }
     
     /// 반반/전체 레이아웃 간 전환

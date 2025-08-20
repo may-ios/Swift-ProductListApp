@@ -25,10 +25,10 @@
 
 ### 추가 구현사항
 - **공통 클래스**
-  - **`BaseNavigationController`**: 네비게이션 바의 색상, 버튼 스타일 등을 표준화하여 일관된 내비게이션 경험 제공
-  - **`BaseViewController`**: 뷰 컨트롤러의 공통 설정(배경색, 기본 탬플릿 메서드 등)을 중앙화하여 코드 중복 감소
-  - **`AppDependencyViewController`**: 뷰컨트롤러의 의존성 주입을 표준화하여 테스트 가능성과 유지보수성 향상
-  - **`BaseWebViewController`**: `WKWebView`의 설정, 로딩 등을 중앙화하여 웹뷰 기반 화면의 재사용성 향상
+  - 뷰 컨트롤러, 네비게이션 뷰컨트롤러, WKWebView 등의 공통 설정(배경색, 기본 탬플릿 메서드)을 중앙화하고 의존성 주입을 표준화하여, 일관된 경험 제공 및 테스트 가능성과 유지보수성 향상
+    - **`BaseNavigationController`** ,**`BaseViewController`**
+    - **`AppViewController`**, **`AppDependencyViewController`**
+    - **`BaseWebViewController`**
   - **`Cellable`**: `UICollectionViewCell`의 등록과 재사용을 간소화하는 프로토콜로, 타입 안전한 셀 관리
 - **레이아웃 전환**
   - `UICollectionView` 기반 2가지 레이아웃(2열 Half / 1열 Full) 토글
@@ -193,7 +193,7 @@ ProductListApp/
 ## 빌드 노트
 
 - 외부 서드파티 의존성 없이 동작합니다.
-- 리소스 JSON은 `Resources/products/`에 포함되어 있으며, 서비스에서 로드합니다.
+- 리소스 JSON은 `Resources/`에 포함되어 있으며, 서비스에서 로드합니다.
 - 앱 라우팅/주입은 SceneDelegate에서 구성합니다.
 
 ---
@@ -209,6 +209,6 @@ ProductListApp/
 
 **개발자**: 강명은
 
-**문의**: akme762@naver.com
+**e-mail**: akme762@naver.com
 
 **감사합니다.**

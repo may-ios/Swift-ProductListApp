@@ -10,6 +10,28 @@
 
 ---
 
+## UIKit vs SwiftUI 버전 비교
+UIKit의 견고함과 SwiftUI + Combine의 간결함, 두 가지 접근 방식으로 같은 과제를 해결해보았습니다. 
+
+
+**(현재)UIKit 버전**          : https://github.com/may-ios/Swift-ProductListApp
+
+**SwiftUI 버전**   : https://github.com/may-ios/SwiftUI-ProductListApp
+
+
+| 항목 | UIKit 버전 | SwiftUI 버전 |
+|---|---|---|
+| **코드 라인 수** | ~2000 라인 | ~800 라인 |
+| **아키텍처 복잡도** | 높음 (Base 클래스, 공통 컴포넌트) | 낮음 (핵심 기능 중심) |
+| **UI 구현** | UICollectionView + AutoLayout | List + 선언적 구문 |
+| **데이터 바인딩** | 수동 업데이트 | @Published + Combine |
+| **레이아웃 전환** | 2가지 레이아웃 토글 | 단일 레이아웃 (과제 요구사항 최적화) |
+| **이미지 처리** | 커스텀 ImageManager + NSCache | AsyncImage (시스템 기본) |
+| **개발 시간** | 7시간 | 3.5시간 |
+
+
+---
+
 ## 핵심 기능
 
 ### 필수 구현사항
@@ -50,8 +72,8 @@
 
 1. **요구사항**:
 
-   - Xcode 15 이상
-   - iOS 16.0 이상 
+   - Xcode 16.2 이상
+   - iOS 16.6 이상 
    - Swift 5.0 이상
 
 2. **설치 및 실행**:
